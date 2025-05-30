@@ -19,7 +19,7 @@ public class Bankaccount {
     }
     public static void main(String[] args) {
         Bankaccount a= new Bankaccount();
-        createaccount("100A", "kajal", 1000);
+        // createaccount("100A", "kajal", 1000);
     }
 
 }

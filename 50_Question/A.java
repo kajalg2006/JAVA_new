@@ -1,6 +1,6 @@
 
 // print the array zeros first then negative then positive
-public class A {
+class A {
     public static void main(String[] args) {
         int arr1[] ={2,3,-1,0,0,7};
         int arr2[]= new int[arr1.length];
