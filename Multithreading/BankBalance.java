@@ -1,47 +1,56 @@
-public class BankBalance {
-    
+class BankAccount {
+    int totalBalance = 1000;
+    boolean isBusy = false; 
+
+    public synchronized void withdraw(String name, int amount) {
+        while (isBusy) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+            }
+        }
+        isBusy = true;
+
+        System.out.println(name + " is trying to withdraw " + amount);
+
+        if (totalBalance >= amount) {
+            System.out.println(name + " is withdrawing " + amount);
+            totalBalance -= amount;
+            System.out.println("Balance after " + name + "'s withdrawal: " + totalBalance);
+        } else {
+            System.out.println("Not enough balance for " + name);
+        }
+
+        
+        isBusy = false;
+        notify();
+    }
 }
+
 class Account extends Thread {
-  
+    BankAccount account;
+    int amount;
 
-    static int Total_balance = 1000;
-    int withdraw;
-    static boolean iswithdrawing= true;
-
-    Account(int withdraw) {
-        this.withdraw = withdraw;
+    public Account(BankAccount account, int amount, String name) {
+        super(name); // set thread name
+        this.account = account;
+        this.amount = amount;
     }
 
     public void run() {
-        
-        if (Total_balance >= withdraw) {
-            System.out.println("going to withdraw money " + withdraw);
-        
-         
-
-            Total_balance = Total_balance - withdraw;
-            System.out.println("Total_balance " + Total_balance);
-        } else {
-          
-            System.out.println(Total_balance);
-
-        }
+        account.withdraw(getName(), amount);
     }
 }
- 
- 
 
- 
-    class D {
+public class BankBalance {
     public static void main(String[] args) {
-        Account a = new Account(800);
+        BankAccount sharedAccount = new BankAccount();
 
-       
-        Account b = new Account(500);
-        Thread t =new Thread( ()->{
-            
-        });
-         a.start();
-         b.start();
+        Account t1 = new Account(sharedAccount, 800, "Thread-1");
+        Account t2 = new Account(sharedAccount, 500, "Thread-2");
+     t1.setName("mohan");
+     t2.setName("sohan");
+        t1.start();
+        t2.start();
     }
- }
+}
