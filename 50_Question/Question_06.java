@@ -2,7 +2,7 @@ public class Question_06 {
 
     public static void main(String[] args) {
         int[] arr1 = {1, 2, 4, 5, 6};
-        int[] arr2 = {2, 3, 5, 7};
+        int[] arr2 = {2, 3, 5, 7,2};
 
         // ----- UNION -----
         int[] union = new int[arr1.length + arr2.length];
